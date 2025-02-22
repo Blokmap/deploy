@@ -39,7 +39,7 @@
     mode: "755"
 
 - name: Generate chonk DH keys
-  ansible.builtin.command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+  ansible.builtin.command: openssl dhparam -dsaparam -out /etc/ssl/certs/dhparam.pem 2048
   args:
     creates: /etc/ssl/certs/dhparam.pem
 

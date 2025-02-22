@@ -1,4 +1,10 @@
+ungrouped:
+    hosts:
+        local:
+            ansible_connection: local
+
 blokmap:
     hosts:
-        test:
-            ansible_connection: local
+        pamkolb:
+            ansible_host: 164.68.106.82
+            ansible_user: root
