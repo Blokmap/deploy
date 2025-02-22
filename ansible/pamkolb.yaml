@@ -1,18 +1,13 @@
 ---
-- name: Simple test playbook
-  hosts: test
-  gather_facts: false
+- name: Configure pamkolb
+  hosts: pamkolb
+  user: root
 
   vars_files:
     - vars/authorized_keys.yaml
 
-  pre_tasks:
-    - name: Update package cache
-      ansible.builtin.apt:
-        update-cache: true
-
   roles:
-    - role: root_ssh_keys
+    - role: common
 
     ###########
     # BLOKMAP #
@@ -20,7 +15,13 @@
 
     - role: new_user
       new_user__name: blokmap
+      tags:
+        - blokmap
+        - user
       new_user__directories: blokmap-data
 
     - role: nginx_vhost
       nginx_vhost__file: blokmap.be
+      tags:
+        - blokmap
+        - nginx

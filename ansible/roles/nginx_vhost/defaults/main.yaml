@@ -1,2 +1,2 @@
 ---
-nginx_vhost__location: 'host_files/{{ ansible_hostname }}/nginx/'
+nginx_vhost__location: 'host_files/{{ ansible_hostname }}/nginx'
