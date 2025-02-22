@@ -1,0 +1,54 @@
+services:
+    blokmap-backend-common:
+        image: ghcr.io/Blokmap/backend:latest
+        environment:
+          - DATABASE_NAME=blokmap
+          - DATABASE_USER=blokmap
+        secrets:
+          - db-password
+        depends_on:
+          - blokmap-db
+
+    blokmap-backend-prod:
+        extends:
+            service: blokmap-backend-common
+        container_name: blokmap-backend-prod
+        ports:
+          - "3000:80"
+        profiles:
+          - production
+
+    blokmap-backend-dev:
+        extends:
+            service: blokmap-backend-common
+        container_name: blokmap-backend-dev
+        ports:
+          - "3001:80"
+        profiles:
+          - development
+
+    blokmap-db:
+        image: postgres:17.0-alpine
+        container_name: blokmap-db
+        environment:
+          - POSTGRES_DB=blokmap
+          - POSTGRES_USER=blokmap
+          - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+        expose:
+          - "5432"
+        volumes:
+          - type: bind
+            source: ~/blokmap-data
+            target: /var/lib/postgresql/data
+        secrets:
+          - db-password
+        healthcheck:
+            test: ["CMD", "pg_isready"]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+
+secrets:
+    db-password:
+        file: ./secrets/db-password.txt
