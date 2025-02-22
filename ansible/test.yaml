@@ -20,6 +20,7 @@
 
     - role: new_user
       new_user__name: blokmap
+      new_user__directories: blokmap-data
 
     - role: nginx_vhost
       nginx_vhost__file: blokmap.be
