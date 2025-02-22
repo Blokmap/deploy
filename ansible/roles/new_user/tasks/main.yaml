@@ -1,0 +1,21 @@
+---
+- name: Create new user
+  ansible.builtin.user:
+    name: "{{ new_user__name }}"
+    shell: "{{ new_user__shell }}"
+  register: user
+
+- name: Create user directies
+  ansible.builtin.file:
+    path: "{{ user.home }}/{{ item.directory }}"
+    mode: "{{ item.mode | default('0755') }}"
+    owner: "{{ item.owner | default(user.name) }}"
+    group: "{{ item.group | default(user.name) }}"
+    state: directory
+  with_items: "{{ new_user__directories }}"
+
+- name: Install authorized keys
+  ansible.posix.authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ new_user__authorized_keys }}"
+    exclusive: false
