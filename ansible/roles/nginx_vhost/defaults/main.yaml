@@ -1,0 +1,2 @@
+---
+nginx_vhost__location: 'host_files/{{ ansible_hostname }}/nginx/'

@@ -1,0 +1,55 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+      - nginx-extras
+      - openssl
+    state: present
+
+- name: Copy nginx configs
+  notify:
+    - Restart nginx
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/nginx/{{ item }}"
+    mode: "644"
+  with_items:
+    - conf.d/
+    - snippets/
+
+- name: Copy nginx.conf
+  notify:
+    - Restart nginx
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: "644"
+
+- name: Ensure /etc/ssl/certs/ exists
+  ansible.builtin.file:
+    path: /etc/ssl/certs
+    state: directory
+    mode: "755"
+
+- name: Ensure /var/www/letsencrypt/ exists
+  ansible.builtin.file:
+    path: /var/www/letsencrypt
+    state: directory
+    mode: "755"
+
+- name: Generate chonk DH keys
+  ansible.builtin.command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+  args:
+    creates: /etc/ssl/certs/dhparam.pem
+
+- name: Remove default nginx vhost
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Ensure nginx is enabled and running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true

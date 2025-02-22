@@ -1,0 +1,18 @@
+---
+- name: Copy vhost file
+  notify: Restart nginx
+  ansible.builtin.template:
+    src: "{{ nginx_vhost__location }}/{{ nginx_vhost__file }}"
+    dest: "/etc/nginx/sites-available/{{ nginx_vhost__file }}"
+    mode: "644"
+
+- name: Symlink the vhost file
+  notify: Restart nginx
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ nginx_vhost__file }}"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_vhost__file }}"
+    state: link
+
+- name: Check configuration
+  ansible.builtin.command: /usr/sbin/nginx -t
+  changed_when: false
