@@ -6,13 +6,8 @@
   vars_files:
     - vars/authorized_keys.yaml
 
-  pre_tasks:
-    - name: Update package cache
-      ansible.builtin.apt:
-        update-cache: true
-
   roles:
-    - role: root_ssh_keys
+    - role: common
 
     ###########
     # BLOKMAP #

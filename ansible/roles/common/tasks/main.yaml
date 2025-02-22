@@ -1,0 +1,36 @@
+---
+- name: Update package cache
+  ansible.builtin.apt:
+    update-cache: true
+
+- name: Install basic packages
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - vim
+      - neovim
+      - nano
+      - openssh-client
+      - openssh-server
+      - openssl
+      - pgp
+      - git
+      - unzip
+      - tar
+      - 7zip
+      - python3
+      - python3-dev
+      - sudo
+      - wget
+      - curl
+      - rsync
+      - htop
+      - gcc
+      - libpq5
+      - libpq-dev
+
+- name: Install authorized SSH keys for root
+  ansible.posix.authorized_key:
+    user: root
+    key: "{{ authorized_keys }}\n{{ common__extra_keys }}"
+    exclusive: true

@@ -1,6 +1,0 @@
----
-- name: Install authorized SSH keys for root
-  ansible.posix.authorized_key:
-    user: root
-    key: "{{ authorized_keys }}\n{{ root_ssh_keys__extra_keys }}"
-    exclusive: true
