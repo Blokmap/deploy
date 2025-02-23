@@ -3,4 +3,4 @@
 secrets/*
 !secrets/.gitkeep
 .env
-.pem
+*.pem
