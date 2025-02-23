@@ -14,23 +14,91 @@
       - openssh-server
       - openssl
       - pgp
-      - git
-      - unzip
-      - tar
-      - 7zip
-      - python3
-      - python3-dev
       - sudo
       - wget
       - curl
       - rsync
       - htop
+      - unzip
+      - tar
+      - 7zip
+      - python3
+      - python3-dev
       - gcc
       - libpq5
       - libpq-dev
+      - git
+      - zsh
+      - fonts-powerline
+      - fd-find
+      - ripgrep
+      - exa
+      - bat
+      - zoxide
+      - fzf
 
 - name: Install authorized SSH keys for root
   ansible.posix.authorized_key:
     user: root
     key: "{{ authorized_keys }}\n{{ common__extra_keys }}"
     exclusive: true
+
+- name: Symlink fd-find to fd
+  ansible.builtin.file:
+    src: /usr/bin/fdfind
+    dest: /usr/bin/fd
+    state: link
+
+- name: Symlink batcat to bat
+  ansible.builtin.file:
+    src: /usr/bin/batcat
+    dest: /usr/bin/bat
+    state: link
+
+- name: Install Oh My Zsh # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: ~/.oh-my-zsh
+    depth: 1
+
+- name: Install zsh-autosuggestions plugin # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    depth: 1
+
+- name: Install zsh-completions plugin # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-completions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-completions
+    depth: 1
+
+- name: Install zsh-syntax-highlighting plugin # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    depth: 1
+
+- name: Change user shell to zsh
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+
+- name: Install Powerlevel10k theme # noqa: latest
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+    depth: 1
+
+- name: Copy zshrc
+  ansible.builtin.copy:
+    src: zshrc
+    dest: ~/.zshrc
+    mode: "644"
+
+- name: Copy p10k.zsh
+  ansible.builtin.copy:
+    src: p10k.zsh
+    dest: ~/.p10k.zsh
+    mode: "644"
