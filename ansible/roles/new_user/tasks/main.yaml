@@ -5,6 +5,37 @@
     shell: "{{ new_user__shell }}"
   register: user
 
+- name: Copy Oh My Zsh setup
+  ansible.builtin.copy:
+    src: /root/.oh-my-zsh/
+    dest: "{{ user.home }}/.oh-my-zsh/"
+    remote_src: true
+    mode: "644"
+    directory_mode: "755"
+    group: "{{ user.group }}"
+    owner: "{{ user.name }}"
+  when: user.shell == "/bin/zsh"
+
+- name: Copy zshrc
+  ansible.builtin.copy:
+    src: /root/.zshrc
+    dest: "{{ user.home }}/.zshrc"
+    remote_src: true
+    mode: "644"
+    group: "{{ user.group }}"
+    owner: "{{ user.name }}"
+  when: user.shell == "/bin/zsh"
+
+- name: Copy p10k.zsh
+  ansible.builtin.copy:
+    src: /root/.p10k.zsh
+    dest: "{{ user.home }}/.p10k.zsh"
+    remote_src: true
+    mode: "644"
+    group: "{{ user.group }}"
+    owner: "{{ user.name }}"
+  when: user.shell == "/bin/zsh"
+
 - name: Create user directies
   ansible.builtin.file:
     path: "{{ user.home }}/{{ item.directory }}"
