@@ -17,8 +17,6 @@ services:
       - DATABASE_USER=blokmap
       - DATABASE_PASSWORD=appel
       - DATABASE_HOST=blokmap-database
-    secrets:
-      - db-password
     depends_on:
       - blokmap-database
     ports:
