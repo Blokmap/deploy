@@ -20,7 +20,7 @@ services:
     secrets:
       - db-password
     depends_on:
-      - blokmap-db
+      - blokmap-database
     ports:
       - "3000:80"
 
