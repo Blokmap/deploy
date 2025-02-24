@@ -26,22 +26,24 @@ services:
     environment:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_PASSWORD=appel
+      - DATABASE_HOST=blokmap-dev-database
     volumes:
       - ${BACKEND_DIR}:/blokmap-backend
     ports:
       - "8000:8000"
     depends_on:
-      - blokmap-database
+      - blokmap-dev-database
 
-  blokmap-database:
+  blokmap-dev-database:
     <<: *common-config
     image: postgres:17.0-alpine
-    container_name: blokmap-db
+    container_name: blokmap-dev-database
     environment:
+      - PGUSER=${DATABASE_USER}
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_PASSWORD=appel
 
   blokmap-nginx:
     image: nginx:alpine
