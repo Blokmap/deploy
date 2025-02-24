@@ -15,35 +15,30 @@ services:
     environment:
       - DATABASE_NAME=blokmap
       - DATABASE_USER=blokmap
-    secrets:
-      - db-password
+      - DATABASE_PASSWORD=appel
+      - DATABASE_HOST=blokmap-database
     depends_on:
-      - blokmap-db
+      - blokmap-database
     ports:
       - "3000:80"
 
-  blokmap-db:
+  blokmap-database:
     image: postgres:17.0-alpine
-    container_name: blokmap-db
+    container_name: blokmap-database
     environment:
+      - PGUSER=blokmap
       - POSTGRES_DB=blokmap
       - POSTGRES_USER=blokmap
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+      - POSTGRES_PASSWORD=appel
     expose:
       - "5432"
     volumes:
       - type: bind
         source: ~/blokmap-data
         target: /var/lib/postgresql/data
-    secrets:
-      - db-password
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 30s
       timeout: 5s
       retries: 5
       start_period: 30s
-
-secrets:
-  db-password:
-    file: ./secrets/db-password.txt
