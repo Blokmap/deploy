@@ -23,7 +23,7 @@
         - user
 
     - role: nginx_vhost
-      nginx_vhost__file: blokmap.be
+      nginx_vhost__file: blokmap.be.conf
       tags:
         - blokmap
         - nginx
