@@ -14,9 +14,15 @@ events {
 http {
     port_in_redirect off;
 
+	# Properly set connection_upgrade
+	map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+    }
+
     # Deny all undefined traffic
     server {
-        listen [::]:80 default_server ipv6only=off;
+        listen 80 default_server;
         server_name _;
         deny all;
 
@@ -47,5 +53,5 @@ http {
     include conf.d/*;
 
     # Include vhosts
-    include       sites-enabled/*;
+    include sites-enabled/*;
 }
