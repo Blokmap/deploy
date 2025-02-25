@@ -22,7 +22,7 @@ services:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
           - DATABASE_HOST=blokmap-staging-database
-          - DATABASE_PORT=6543
+          - DATABASE_PORT=5432
           - DATABASE_NAME=blokmap
         depends_on:
           - blokmap-staging-database
@@ -39,7 +39,7 @@ services:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
           - DATABASE_HOST=blokmap-staging-database
-          - DATABASE_PORT=6543
+          - DATABASE_PORT=5432
           - DATABASE_NAME=blokmap
         depends_on:
           - blokmap-staging-database
