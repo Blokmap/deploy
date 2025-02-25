@@ -10,7 +10,7 @@
     src: /root/.oh-my-zsh/
     dest: "{{ user.home }}/.oh-my-zsh/"
     remote_src: true
-    mode: "644"
+    mode: "755"
     directory_mode: "755"
     group: "{{ user.group }}"
     owner: "{{ user.name }}"
