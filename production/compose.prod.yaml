@@ -10,7 +10,7 @@ services:
         container_name: blokmap-prod-frontend
         <<: *common-config
         volumes:
-          - ${FRONTEND_PROD_DIR}:/blokmap-frontend
+          - ${FRONTEND_PROD_DIR}:/blokmap-frontend/build
 
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
