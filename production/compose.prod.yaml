@@ -21,7 +21,7 @@ services:
         environment:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-database
+          - DATABASE_HOST=blokmap-prod-database
           - DATABASE_NAME=blokmap
         depends_on:
           - blokmap-prod-database

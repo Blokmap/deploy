@@ -21,7 +21,7 @@ services:
         environment:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-database
+          - DATABASE_HOST=blokmap-staging-database
           - DATABASE_PORT=6543
           - DATABASE_NAME=blokmap
         depends_on:
@@ -31,14 +31,14 @@ services:
 
     blokmap-staging-migrations:
         image: ghcr.io/blokmap/blokmap-backend:latest
-        container_name: blokmap-staging-backend
+        container_name: blokmap-staging-migrations
         <<: *common-config
         restart: "no"
         command: alembic upgrade head
         environment:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-database
+          - DATABASE_HOST=blokmap-staging-database
           - DATABASE_PORT=6543
           - DATABASE_NAME=blokmap
         depends_on:
