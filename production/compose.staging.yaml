@@ -1,57 +1,72 @@
 x-common-config: &common-config
-  restart: unless-stopped
-  env_file: .env
-  networks:
-    - blokmap-staging-network
+    restart: unless-stopped
+    env_file: .env
+    networks:
+        - blokmap-staging-network
 
 services:
-  blokmap-staging-frontend:
-    container_name: blokmap-staging-frontend
-    build:
-      context: ${FRONTEND_DIR}
-      dockerfile: Dockerfile.prod
-    <<: *common-config
-    volumes:
-      - ${FRONTEND_DIR}:/blokmap-frontend
+    blokmap-staging-frontend:
+        container_name: blokmap-staging-frontend
+        build:
+            context: ${FRONTEND_DIR}
+            dockerfile: Dockerfile.prod
+        <<: *common-config
+        volumes:
+          - ${FRONTEND_DIR}:/blokmap-frontend
 
-  blokmap-staging-backend:
-    image: ghcr.io/blokmap/backend:latest
-    container_name: blokmap-staging-backend
-    <<: *common-config
-    environment:
-      - DATABASE_USER=blokmap
-      - DATABASE_PASSWORD=appel
-      - DATABASE_HOST=blokmap-database
-      - DATABASE_PORT=6543
-      - DATABASE_NAME=blokmap
-    depends_on:
-      - blokmap-staging-database
-    ports:
-      - "3000:80"
+    blokmap-staging-backend:
+        image: ghcr.io/blokmap/backend:latest
+        container_name: blokmap-staging-backend
+        <<: *common-config
+        environment:
+          - DATABASE_USER=blokmap
+          - DATABASE_PASSWORD=appel
+          - DATABASE_HOST=blokmap-database
+          - DATABASE_PORT=6543
+          - DATABASE_NAME=blokmap
+        depends_on:
+          - blokmap-staging-database
+        ports:
+          - "3000:80"
 
-  blokmap-staging-database:
-    image: postgres:17.0-alpine
-    container_name: blokmap-staging-database
-    <<: *common-config
-    environment:
-      - PGUSER=blokmap
-      - POSTGRES_USER=blokmap
-      - POSTGRES_PASSWORD=appel
-      - POSTGRES_DB=blokmap
-    ports:
-      - "6543:5432"
-    volumes:
-      - type: bind
-        source: ~/blokmap-data
-        target: /var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD", "pg_isready" ]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+    blokmap-staging-migrations:
+        image: ghcr.io/blokmap/backend:latest
+        container_name: blokmap-staging-backend
+        <<: *common-config
+        restart: "no"
+        command: alembic upgrade head
+        environment:
+          - DATABASE_USER=blokmap
+          - DATABASE_PASSWORD=appel
+          - DATABASE_HOST=blokmap-database
+          - DATABASE_PORT=6543
+          - DATABASE_NAME=blokmap
+        depends_on:
+          - blokmap-staging-database
+
+    blokmap-staging-database:
+        image: postgres:17.0-alpine
+        container_name: blokmap-staging-database
+        <<: *common-config
+        environment:
+          - PGUSER=blokmap
+          - POSTGRES_USER=blokmap
+          - POSTGRES_PASSWORD=appel
+          - POSTGRES_DB=blokmap
+        ports:
+          - "6543:5432"
+        volumes:
+          - type: bind
+            source: ~/blokmap-data
+            target: /var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD", "pg_isready" ]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
 
 networks:
-  blokmap-staging-network:
-    name: blokmap-staging-network
-    driver: bridge
+    blokmap-staging-network:
+        name: blokmap-staging-network
+        driver: bridge

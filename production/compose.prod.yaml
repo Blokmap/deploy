@@ -1,56 +1,56 @@
 x-common-config: &common-config
-  restart: unless-stopped
-  env_file: .env
-  networks:
-    - blokmap-prod-network
+    restart: unless-stopped
+    env_file: .env
+    networks:
+        - blokmap-prod-network
 
 services:
-  blokmap-prod-frontend:
-    container_name: blokmap-prod-frontend
-    build:
-      context: ${FRONTEND_DIR}
-      dockerfile: Dockerfile.prod
-    <<: *common-config
-    volumes:
-      - ${FRONTEND_DIR}:/blokmap-frontend
+    blokmap-prod-frontend:
+        container_name: blokmap-prod-frontend
+        build:
+            context: ${FRONTEND_DIR}
+            dockerfile: Dockerfile.prod
+        <<: *common-config
+        volumes:
+          - ${FRONTEND_DIR}:/blokmap-frontend
 
-  blokmap-prod-backend:
-    image: ghcr.io/blokmap/backend:latest
-    container_name: blokmap-prod-backend
-    <<: *common-config
-    environment:
-      - DATABASE_USER=blokmap
-      - DATABASE_PASSWORD=appel
-      - DATABASE_HOST=blokmap-database
-      - DATABASE_NAME=blokmap
-    depends_on:
-      - blokmap-prod-database
-    ports:
-      - "3000:80"
+    blokmap-prod-backend:
+        image: ghcr.io/blokmap/backend:latest
+        container_name: blokmap-prod-backend
+        <<: *common-config
+        environment:
+          - DATABASE_USER=blokmap
+          - DATABASE_PASSWORD=appel
+          - DATABASE_HOST=blokmap-database
+          - DATABASE_NAME=blokmap
+        depends_on:
+          - blokmap-prod-database
+        ports:
+          - "3000:80"
 
-  blokmap-prod-database:
-    image: postgres:17.0-alpine
-    container_name: blokmap-prod-database
-    <<: *common-config
-    environment:
-      - PGUSER=blokmap
-      - POSTGRES_USER=blokmap
-      - POSTGRES_PASSWORD=appel
-      - POSTGRES_DB=blokmap
-    expose:
-      - "5432"
-    volumes:
-      - type: bind
-        source: ~/blokmap-data
-        target: /var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD", "pg_isready" ]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+    blokmap-prod-database:
+        image: postgres:17.0-alpine
+        container_name: blokmap-prod-database
+        <<: *common-config
+        environment:
+          - PGUSER=blokmap
+          - POSTGRES_USER=blokmap
+          - POSTGRES_PASSWORD=appel
+          - POSTGRES_DB=blokmap
+        expose:
+            - "5432"
+        volumes:
+          - type: bind
+            source: ~/blokmap-data
+            target: /var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD", "pg_isready" ]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
 
 networks:
-  blokmap-prod-network:
-    name: blokmap-prod-network
-    driver: bridge
+    blokmap-prod-network:
+        name: blokmap-prod-network
+        driver: bridge
