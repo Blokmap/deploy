@@ -2,3 +2,4 @@
 authorized_keys: |
     ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMI4e631pK/Um/Vo7RK3T2/vz7ouwibDUhNq8SglU4Qc tibo@glacier
     ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL9cd9SuXN8mqLJMG+QmY+tkG6CXJ/uZeOiTATyLrPsT ewout@ebomen
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQR8duPt48vnbWrG6OjF0hqLWeaVuP0CRzDrOSqsfzb blokmap automatic deploy login

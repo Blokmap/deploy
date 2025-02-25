@@ -2,11 +2,11 @@ x-common-config: &common-config
     restart: unless-stopped
     env_file: .env
     networks:
-        - blokmap-prod-network
+        - blokmap-staging-network
 
 services:
-    blokmap-prod-frontend:
-        container_name: blokmap-prod-frontend
+    blokmap-staging-frontend:
+        container_name: blokmap-staging-frontend
         build:
             context: ${FRONTEND_DIR}
             dockerfile: Dockerfile.prod
@@ -14,31 +14,47 @@ services:
         volumes:
           - ${FRONTEND_DIR}:/blokmap-frontend
 
-    blokmap-prod-backend:
+    blokmap-staging-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
-        container_name: blokmap-prod-backend
+        container_name: blokmap-staging-backend
         <<: *common-config
         environment:
           - DATABASE_USER=blokmap
           - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-prod-database
+          - DATABASE_HOST=blokmap-staging-database
+          - DATABASE_PORT=5432
           - DATABASE_NAME=blokmap
         depends_on:
-          - blokmap-prod-database
+          - blokmap-staging-database
         ports:
-          - "3000:80"
+          - "3001:80"
 
-    blokmap-prod-database:
+    blokmap-staging-migrations:
+        image: ghcr.io/blokmap/blokmap-backend:latest
+        container_name: blokmap-staging-migrations
+        <<: *common-config
+        restart: "no"
+        command: alembic upgrade head
+        environment:
+          - DATABASE_USER=blokmap
+          - DATABASE_PASSWORD=appel
+          - DATABASE_HOST=blokmap-staging-database
+          - DATABASE_PORT=5432
+          - DATABASE_NAME=blokmap
+        depends_on:
+          - blokmap-staging-database
+
+    blokmap-staging-database:
         image: postgres:17.0-alpine
-        container_name: blokmap-prod-database
+        container_name: blokmap-staging-database
         <<: *common-config
         environment:
           - PGUSER=blokmap
           - POSTGRES_USER=blokmap
           - POSTGRES_PASSWORD=appel
           - POSTGRES_DB=blokmap
-        expose:
-            - "5432"
+        ports:
+          - "6543:5432"
         volumes:
           - type: bind
             source: ~/blokmap-data
@@ -51,6 +67,6 @@ services:
             start_period: 30s
 
 networks:
-    blokmap-prod-network:
-        name: blokmap-prod-network
+    blokmap-staging-network:
+        name: blokmap-staging-network
         driver: bridge

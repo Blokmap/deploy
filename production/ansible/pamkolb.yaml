@@ -9,12 +9,17 @@
   roles:
     - role: common
 
+    - role: docker
+      tags:
+        - docker
+
     ###########
     # BLOKMAP #
     ###########
 
     - role: new_user
       new_user__name: blokmap
+      new_user__groups: docker
       new_user__shell: /bin/zsh
       new_user__directories:
         - directory: blokmap-data
@@ -26,4 +31,12 @@
       nginx_vhost__file: blokmap.be.conf
       tags:
         - blokmap
+        - production
+        - nginx
+
+    - role: nginx_vhost
+      nginx_vhost__file: staging.blokmap.be.conf
+      tags:
+        - blokmap
+        - staging
         - nginx

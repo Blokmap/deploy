@@ -2,3 +2,4 @@
 new_user__authorized_keys: "{{ authorized_keys }}"
 new_user__directories: []
 new_user__shell: "/bin/bash"
+new_user__groups: []
