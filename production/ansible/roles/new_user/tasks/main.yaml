@@ -3,6 +3,8 @@
   ansible.builtin.user:
     name: "{{ new_user__name }}"
     shell: "{{ new_user__shell }}"
+    append: true
+    groups: "{{ new_user__groups }}"
   register: user
 
 - name: Copy Oh My Zsh setup
