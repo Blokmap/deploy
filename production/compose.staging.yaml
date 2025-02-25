@@ -6,7 +6,7 @@ x-common-config: &common-config
 
 services:
     blokmap-staging-frontend:
-        image: ghcr.io/blokmap/blokmap-backend:latest
+        image: ghcr.io/blokmap/blokmap-frontend:latest
         container_name: blokmap-staging-frontend
         <<: *common-config
         volumes:
