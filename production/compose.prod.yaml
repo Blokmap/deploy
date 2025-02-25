@@ -15,7 +15,7 @@ services:
           - ${FRONTEND_DIR}:/blokmap-frontend
 
     blokmap-prod-backend:
-        image: ghcr.io/blokmap/backend:latest
+        image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-prod-backend
         <<: *common-config
         environment:

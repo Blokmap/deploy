@@ -15,7 +15,7 @@ services:
           - ${FRONTEND_DIR}:/blokmap-frontend
 
     blokmap-staging-backend:
-        image: ghcr.io/blokmap/backend:latest
+        image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-staging-backend
         <<: *common-config
         environment:
@@ -30,7 +30,7 @@ services:
           - "3000:80"
 
     blokmap-staging-migrations:
-        image: ghcr.io/blokmap/backend:latest
+        image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-staging-backend
         <<: *common-config
         restart: "no"
