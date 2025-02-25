@@ -27,7 +27,7 @@ services:
         depends_on:
           - blokmap-staging-database
         ports:
-          - "3000:80"
+          - "3001:80"
 
     blokmap-staging-migrations:
         image: ghcr.io/blokmap/blokmap-backend:latest
