@@ -26,4 +26,12 @@
       nginx_vhost__file: blokmap.be.conf
       tags:
         - blokmap
+        - production
+        - nginx
+
+    - role: nginx_vhost
+      nginx_vhost__file: staging.blokmap.be.conf
+      tags:
+        - blokmap
+        - staging
         - nginx
