@@ -4,3 +4,5 @@ secrets/*
 !secrets/.gitkeep
 .env
 *.pem
+*.crt
+*.key
