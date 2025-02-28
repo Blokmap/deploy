@@ -6,13 +6,11 @@ x-common-config: &common-config
 
 services:
     blokmap-prod-frontend:
+        image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-prod-frontend
-        build:
-            context: ${FRONTEND_DIR}
-            dockerfile: Dockerfile.prod
         <<: *common-config
         volumes:
-          - ${FRONTEND_DIR}:/blokmap-frontend
+          - ${FRONTEND_PROD_DIR}:/blokmap-frontend/build
 
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
