@@ -9,6 +9,7 @@ services:
         image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-prod-frontend
         <<: *common-config
+        restart: "no"
         volumes:
           - ${FRONTEND_PROD_DIR}:/blokmap-frontend/build
 
