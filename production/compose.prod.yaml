@@ -11,7 +11,7 @@ services:
         <<: *common-config
         restart: "no"
         volumes:
-          - ${FRONTEND_PROD_DIR}:/blokmap-frontend/build
+          - ${FRONTEND_PROD_DIR}:/blokmap-frontend/public
 
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
