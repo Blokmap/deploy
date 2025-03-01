@@ -56,7 +56,7 @@ services:
           - "6543:5432"
         volumes:
           - type: bind
-            source: ~/blokmap-data
+            source: ~/blokmap-staging-data
             target: /var/lib/postgresql/data
         healthcheck:
             test: [ "CMD", "pg_isready" ]

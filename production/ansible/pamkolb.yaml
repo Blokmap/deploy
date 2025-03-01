@@ -23,6 +23,7 @@
       new_user__shell: /bin/zsh
       new_user__directories:
         - directory: blokmap-data
+        - directory: blokmap-staging-data
       tags:
         - blokmap
         - user
