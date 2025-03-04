@@ -24,14 +24,11 @@ services:
       context: ${BACKEND_DIR}
       dockerfile: Dockerfile.dev
     environment:
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=appel
-      - DATABASE_HOST=blokmap-dev-database
+        - DATABASE_URL=postgresql://blokmap:appel@blokmap-dev-database:5432/blokmap
     volumes:
-      - ${BACKEND_DIR}:/blokmap-backend
+      - ${BACKEND_DIR}/src:/volume/blokmap-backend/src
     ports:
-      - "8000:8000"
+      - "8000:80"
     depends_on:
       - blokmap-dev-database
 
