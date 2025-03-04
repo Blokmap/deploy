@@ -18,11 +18,7 @@ services:
         container_name: blokmap-staging-backend
         <<: *common-config
         environment:
-          - DATABASE_USER=blokmap
-          - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-staging-database
-          - DATABASE_PORT=5432
-          - DATABASE_NAME=blokmap
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
         depends_on:
           - blokmap-staging-database
         ports:
@@ -35,11 +31,7 @@ services:
         restart: "no"
         command: alembic upgrade head
         environment:
-          - DATABASE_USER=blokmap
-          - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-staging-database
-          - DATABASE_PORT=5432
-          - DATABASE_NAME=blokmap
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
         depends_on:
           - blokmap-staging-database
 

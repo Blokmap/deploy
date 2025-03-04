@@ -6,7 +6,7 @@ x-common-config: &common-config
 
 services:
     blokmap-prod-frontend:
-        image: ghcr.io/blokmap/blokmap-backend:latest
+        image: ghcr.io/blokmap/blokmap-frontend:latest
         container_name: blokmap-prod-frontend
         <<: *common-config
         restart: "no"
@@ -18,10 +18,7 @@ services:
         container_name: blokmap-prod-backend
         <<: *common-config
         environment:
-          - DATABASE_USER=blokmap
-          - DATABASE_PASSWORD=appel
-          - DATABASE_HOST=blokmap-prod-database
-          - DATABASE_NAME=blokmap
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-prod-database:5432/blokmap
         depends_on:
           - blokmap-prod-database
         ports:
