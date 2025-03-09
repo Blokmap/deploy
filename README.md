@@ -24,6 +24,14 @@ cp .env.example .env
 
 Make sure to fill in the necessary environment variables in the newly created `.env` file.
 
+### 3. Generating secrets
+
+In the `development` folder run the following command:
+
+```bash
+openssl rand -base64 -out secrets/cookie_jar_key 64
+```
+
 ### 3. Creating a self-signed certificate
 
 To run the project locally, you need to create a self-signed certificate. You can do this by running the following command in the `deploy/development/nginx/certs` folder:
