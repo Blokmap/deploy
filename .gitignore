@@ -1,7 +1,7 @@
 .ansible/
 
-secrets/*
-!secrets/.gitkeep
+**/secrets/*
+!**/secrets/.gitkeep
 .env
 *.pem
 *.crt
