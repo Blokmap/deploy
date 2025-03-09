@@ -25,12 +25,17 @@ services:
       dockerfile: Dockerfile.dev
     environment:
         - DATABASE_URL=postgresql://blokmap:appel@blokmap-dev-database:5432/blokmap
+        - REDIS_URL=redis://blokmap-dev-redis/
+        - FRONTEND_URL=http://localhost:3000
     volumes:
       - ${BACKEND_DIR}/src:/volume/blokmap-backend/src
     ports:
       - "8000:80"
+    secrets:
+      - cookie-jar-key
     depends_on:
       - blokmap-dev-database
+      - blokmap-dev-redis
 
   blokmap-dev-database:
     <<: *common-config
@@ -43,6 +48,13 @@ services:
       - POSTGRES_PASSWORD=appel
     ports:
       - "6543:5432"
+
+  blokmap-dev-redis:
+    <<: *common-config
+    image: redis:7-alpine
+    container_name: blokmap-dev-redis
+    ports:
+      - "6379:6379"
 
   blokmap-dev-nginx:
     image: nginx:alpine
@@ -58,6 +70,10 @@ services:
       - blokmap-dev-backend
     networks:
       - blokmap-dev-network
+
+secrets:
+  cookie-jar-key:
+    file: ./secrets/cookie-jar-key
 
 networks:
   blokmap-dev-network:
