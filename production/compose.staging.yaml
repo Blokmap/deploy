@@ -19,10 +19,15 @@ services:
         <<: *common-config
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
-        depends_on:
-          - blokmap-staging-database
+          - REDIS_URL=redis://blokmap-staging-redis/
+          - FRONTEND_URL=https://staging.blokmap.ebosprojects.be
         ports:
           - "3001:80"
+        secrets:
+          - cookie-jar-key
+        depends_on:
+          - blokmap-staging-database
+          - blokmap-staging-redis
 
     blokmap-staging-migrations:
         image: ghcr.io/blokmap/blokmap-migrations:latest
@@ -55,6 +60,17 @@ services:
             timeout: 5s
             retries: 5
             start_period: 30s
+
+    blokmap-staging-redis:
+        image: redis:7-alpine
+        container_name: blokmap-staging-redis
+        <<: *common-config
+        ports:
+          - "6379:6379"
+
+secrets:
+    cookie-jar-key:
+        file: ./secrets/cookie-jar-key
 
 networks:
     blokmap-staging-network:

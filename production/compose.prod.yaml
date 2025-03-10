@@ -19,10 +19,15 @@ services:
         <<: *common-config
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-prod-database:5432/blokmap
-        depends_on:
-          - blokmap-prod-database
+          - REDIS_URL=redis://blokmap-prod-redis/
+          - FRONTEND_URL=https://blokmap.ebosprojects.be
         ports:
           - "3000:80"
+        secrets:
+          - cookie-jar-key
+        depends_on:
+          - blokmap-prod-database
+          - blokmap-prod-redis
 
     blokmap-prod-database:
         image: postgres:17.0-alpine
@@ -45,6 +50,13 @@ services:
             timeout: 5s
             retries: 5
             start_period: 30s
+
+    blokmap-prod-redis:
+        image: redis:7-alpine
+        container_name: blokmap-prod-redis
+        <<: *common-config
+        ports:
+          - "6379:6379"
 
 networks:
     blokmap-prod-network:
