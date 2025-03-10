@@ -58,6 +58,10 @@ services:
         ports:
           - "6379:6379"
 
+secrets:
+    cookie-jar-key:
+        files: ./secrets/cookie-jar-key
+
 networks:
     blokmap-prod-network:
         name: blokmap-prod-network
