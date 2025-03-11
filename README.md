@@ -29,7 +29,7 @@ Make sure to fill in the necessary environment variables in the newly created `.
 In the `development` folder run the following command:
 
 ```bash
-openssl rand -base64 -out secrets/cookie_jar_key 64
+openssl rand -base64 -out secrets/cookie-jar-key 64
 ```
 
 ### 3. Creating a self-signed certificate
