@@ -60,7 +60,7 @@ services:
 
 secrets:
     cookie-jar-key:
-        files: ./secrets/cookie-jar-key
+        file: ./secrets/cookie-jar-key
 
 networks:
     blokmap-prod-network:
