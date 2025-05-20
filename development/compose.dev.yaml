@@ -63,6 +63,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/certs:/etc/nginx/certs
+      - ${FILES_LOCATION}:/usr/share/nginx/html/files
     ports:
       - "80:80"
       - "443:443"
