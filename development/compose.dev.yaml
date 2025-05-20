@@ -29,6 +29,7 @@ services:
         - FRONTEND_URL=http://localhost:3000
     volumes:
       - ${BACKEND_DIR}/src:/volume/blokmap-backend/src
+      - ${FILES_LOCATION}:/mnt/files
     ports:
       - "8000:80"
     secrets:
