@@ -36,6 +36,10 @@ services:
         restart: "no"
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
+        volumes:
+          - type: bind
+            source: ~/blokmap-staging-files
+            target: /mnt/files
         depends_on:
           - blokmap-staging-database
 

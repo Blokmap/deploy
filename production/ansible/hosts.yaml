@@ -8,3 +8,7 @@ blokmap:
         pamkolb:
             ansible_host: 164.68.106.82
             ansible_user: root
+        melina:
+            ansible_host: melina.ugent.be
+            ansible_user: root
+            ansible_port: 2222
