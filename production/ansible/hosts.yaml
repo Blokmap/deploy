@@ -12,3 +12,11 @@ blokmap:
             ansible_host: melina.ugent.be
             ansible_user: root
             ansible_port: 2222
+        ranni:
+            ansible_host: ranni.ugent.be
+            ansible_user: root
+            ansible_port: 2222
+        bayle:
+            ansible_host: bayle.ugent.be
+            ansible_user: root
+            ansible_port: 2222

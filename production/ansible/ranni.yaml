@@ -1,0 +1,36 @@
+---
+- name: Configure ranni
+  hosts: ranni
+  user: root
+
+  vars_files:
+    - vars/authorized_keys.yaml
+
+  roles:
+    - role: common
+
+    - role: docker
+      tags:
+        - docker
+
+    ###########
+    # BLOKMAP #
+    ###########
+
+    - role: new_user
+      new_user__name: blokmap
+      new_user__groups: docker
+      new_user__shell: /bin/zsh
+      new_user__directories:
+        - directory: blokmap-data
+        - directory: blokmap-files
+      tags:
+        - blokmap
+        - user
+
+    - role: nginx_vhost
+      nginx_vhost__file: blokmap.ugent.be.conf
+      tags:
+        - blokmap
+        - production
+        - nginx
