@@ -25,6 +25,7 @@ services:
           - "3001:80"
         secrets:
           - cookie-jar-key
+          - google-oidc-credentials
         depends_on:
           - blokmap-staging-database
           - blokmap-staging-redis
@@ -75,6 +76,8 @@ services:
 secrets:
     cookie-jar-key:
         file: ./secrets/cookie-jar-key
+    google-oidc-credentials:
+        file: ./secrets/google-oidc-credentials
 
 networks:
     blokmap-staging-network:
