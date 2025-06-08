@@ -28,7 +28,11 @@ services:
         - REDIS_URL=redis://blokmap-dev-redis/
         - FRONTEND_URL=http://localhost:3000
     volumes:
-      - ${BACKEND_DIR}/src:/volume/blokmap-backend/src
+      - ${BACKEND_DIR}/src:/blokmap-backend/src
+      - ${BACKEND_DIR}/models:/blokmap-backend/models
+      - ${BACKEND_DIR}/common:/blokmap-backend/common
+      - ${BACKEND_DIR}/Cargo.toml:/blokmap-backend/Cargo.toml
+      - ${BACKEND_DIR}/Cargo.lock:/blokmap-backend/Cargo.lock
       - ${FILES_LOCATION}:/mnt/files
     ports:
       - "8000:80"
