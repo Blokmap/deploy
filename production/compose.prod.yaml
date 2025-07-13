@@ -30,6 +30,20 @@ services:
           - blokmap-prod-database
           - blokmap-prod-redis
 
+    blokmap-prod-migrations:
+        image: ghcr.io/blokmap/blokmap-migrations:latest
+        container_name: blokmap-prod-migrations
+        <<: *common-config
+        restart: "no"
+        environment:
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-prod-database:5432/blokmap
+        volumes:
+          - type: bind
+            source: ~/blokmap-files
+            target: /mnt/files
+        depends_on:
+          - blokmap-prod-database
+
     blokmap-prod-database:
         image: postgres:17.0-alpine
         container_name: blokmap-prod-database
