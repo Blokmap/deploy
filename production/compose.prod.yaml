@@ -20,7 +20,8 @@ services:
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-prod-database:5432/blokmap
           - REDIS_URL=redis://blokmap-prod-redis/
-          - FRONTEND_URL=https://blokmap.ebosprojects.be
+          - FRONTEND_URL=https://blokmap.ugent.be
+          - BASE_URL=https://blokmap.ugent.be/api
         ports:
           - "3000:80"
         secrets:
