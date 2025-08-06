@@ -13,6 +13,14 @@ services:
         volumes:
           - ${FRONTEND_PROD_DIR}:/blokmap-frontend/public
 
+    blokmap-prod-docs:
+        image: ghcr.io/blokmap/blokmap-docs:latest
+        container_name: blokmap-prod-docs
+        <<: *common-config
+        restart: "no"
+        volumes:
+          - ${FRONTEND_PROD_DIR}/docs:/blokmap-docs/docs/.vitepress/dist
+
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-prod-backend
