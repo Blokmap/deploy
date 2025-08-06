@@ -19,7 +19,7 @@ services:
         <<: *common-config
         restart: "no"
         volumes:
-          - ${FRONTEND_PROD_DIR}/docs:/blokmap-docs/docs/.vitepress/dist
+          - ${DOCS_PROD_DIR}:/blokmap-docs/docs/.vitepress/dist
 
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
