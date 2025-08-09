@@ -13,6 +13,14 @@ services:
         volumes:
           - ${FRONTEND_PROD_DIR}:/blokmap-frontend/public
 
+    blokmap-prod-docs:
+        image: ghcr.io/blokmap/blokmap-docs:latest
+        container_name: blokmap-prod-docs
+        <<: *common-config
+        restart: "no"
+        volumes:
+          - ${DOCS_PROD_DIR}:/blokmap-docs/docs/.vitepress/dist
+
     blokmap-prod-backend:
         image: ghcr.io/blokmap/blokmap-backend:latest
         container_name: blokmap-prod-backend
@@ -22,6 +30,8 @@ services:
           - REDIS_URL=redis://blokmap-prod-redis/
           - FRONTEND_URL=https://blokmap.ugent.be
           - BASE_URL=https://blokmap.ugent.be/api
+          - PRODUCTION=true
+          - SKIP_VERIFY=false
         ports:
           - "3000:80"
         secrets:
@@ -54,8 +64,8 @@ services:
           - POSTGRES_USER=blokmap
           - POSTGRES_PASSWORD=appel
           - POSTGRES_DB=blokmap
-        expose:
-            - "5432"
+        ports:
+            - "5432:5432"
         volumes:
           - type: bind
             source: ~/blokmap-data

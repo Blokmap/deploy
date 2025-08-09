@@ -49,7 +49,7 @@ To run the project locally, you need to add the following line to your hosts fil
 On **Linux**:
 
 ```
-echo "127.0.0.1 blokmap.local" >> /etc/hosts
+echo "127.0.0.1 dev.blokmap.io" >> /etc/hosts
 ```
 
 ### 5. Running the project
@@ -60,10 +60,10 @@ To run the project, you need to have Docker and Docker Compose installed on your
 docker compose up --build
 ```
 
-The project will be available at [https://blokmap.local](https://blokmap.local):
+The project will be available at [https://dev.blokmap.io](https://dev.blokmap.io):
 
-- Frontend build files are served on [https://blokmap.local](https://blokmap.local) with HMR enabled.
-- Backend API is available on [https://blokmap.local/api](https://blokmap.local/api) with automatic reloading enabled.
+- Frontend build files are served on [https://dev.blokmap.io](https://dev.blokmap.io) with HMR enabled.
+- Backend API is available on [https://dev.blokmap.io/api](https://dev.blokmap.io/api) with automatic reloading enabled.
 
 ## Production
 
