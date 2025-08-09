@@ -30,6 +30,8 @@ services:
           - REDIS_URL=redis://blokmap-prod-redis/
           - FRONTEND_URL=https://blokmap.ugent.be
           - BASE_URL=https://blokmap.ugent.be/api
+          - PRODUCTION=true
+          - SKIP_VERIFY=false
         ports:
           - "3000:80"
         secrets:
