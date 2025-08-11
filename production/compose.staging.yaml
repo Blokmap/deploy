@@ -22,7 +22,7 @@ services:
           - REDIS_URL=redis://blokmap-staging-redis/
           - BACKEND_URL=https://staging.blokmap.ugent.be/api/
           - FRONTEND_URL=https://staging.blokmap.ugent.be/
-          - STATIC_URL=https://static.staging.blokmap.ugent.be/
+          - STATIC_URL=https://staging.blokmap.ugent.be/static/
         volumes:
           - type: bind
             source: ~/blokmap-staging-files
