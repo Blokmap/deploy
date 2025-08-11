@@ -23,6 +23,10 @@ services:
           - BACKEND_URL=https://staging.blokmap.ugent.be/api/
           - FRONTEND_URL=https://staging.blokmap.ugent.be/
           - STATIC_URL=https://static.staging.blokmap.ugent.be/
+        volumes:
+          - type: bind
+            source: ~/blokmap-staging-files
+            target: /mnt/files
         ports:
           - "3001:80"
         secrets:

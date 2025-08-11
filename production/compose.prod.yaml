@@ -32,7 +32,11 @@ services:
           - SKIP_VERIFY=false
           - BACKEND_URL=https://blokmap.ugent.be/api/
           - FRONTEND_URL=https://blokmap.ugent.be/
-          - STATIC_URL=https://static.blokmap.ugent.be/
+          - STATIC_URL=https://blokmap.ugent.be/static/
+        volumes:
+          - type: bind
+            source: ~/blokmap-files
+            target: /mnt/files
         ports:
           - "3000:80"
         secrets:
