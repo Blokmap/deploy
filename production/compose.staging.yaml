@@ -20,8 +20,9 @@ services:
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
           - REDIS_URL=redis://blokmap-staging-redis/
-          - FRONTEND_URL=https://staging.blokmap.ugent.be
-          - BASE_URL=https://staging.blokmap.ugent.be/api
+          - BACKEND_URL=https://staging.blokmap.ugent.be/api/
+          - FRONTEND_URL=https://staging.blokmap.ugent.be/
+          - STATIC_URL=https://static.staging.blokmap.ugent.be/
         ports:
           - "3001:80"
         secrets:

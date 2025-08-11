@@ -28,10 +28,11 @@ services:
         environment:
           - DATABASE_URL=postgresql://blokmap:appel@blokmap-prod-database:5432/blokmap
           - REDIS_URL=redis://blokmap-prod-redis/
-          - FRONTEND_URL=https://blokmap.ugent.be
-          - BASE_URL=https://blokmap.ugent.be/api
           - PRODUCTION=true
           - SKIP_VERIFY=false
+          - BACKEND_URL=https://blokmap.ugent.be/api/
+          - FRONTEND_URL=https://blokmap.ugent.be/
+          - STATIC_URL=https://static.blokmap.ugent.be/
         ports:
           - "3000:80"
         secrets:
