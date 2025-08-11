@@ -27,8 +27,9 @@ services:
     environment:
         - DATABASE_URL=postgresql://blokmap:appel@blokmap-dev-database:5432/blokmap
         - REDIS_URL=redis://blokmap-dev-redis/
+        - BACKEND_URL=http://localhost:8000
         - FRONTEND_URL=http://localhost:3000
-        - BASE_URL=http://localhost:8000
+        - STATIC_URL=http://localhost:8000/files
     volumes:
       - ${BACKEND_DIR}/src:/blokmap-backend/src
       - ${BACKEND_DIR}/models:/blokmap-backend/models
