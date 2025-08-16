@@ -14,7 +14,7 @@ services:
           - ${FRONTEND_STAGING_DIR}:/blokmap-frontend/public
 
     blokmap-staging-backend:
-        image: ghcr.io/blokmap/blokmap-backend:latest
+        image: ghcr.io/blokmap/blokmap-staging-backend:latest
         container_name: blokmap-staging-backend
         <<: *common-config
         environment:
