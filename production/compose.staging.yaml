@@ -37,7 +37,7 @@ services:
           - blokmap-staging-redis
 
     blokmap-staging-migrations:
-        image: ghcr.io/blokmap/blokmap-migrations:latest
+        image: ghcr.io/blokmap/blokmap-staging-migrations:latest
         container_name: blokmap-staging-migrations
         <<: *common-config
         restart: "no"

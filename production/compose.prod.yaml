@@ -47,7 +47,7 @@ services:
           - blokmap-prod-redis
 
     blokmap-prod-migrations:
-        image: ghcr.io/blokmap/blokmap-migrations:latest
+        image: ghcr.io/blokmap/blokmap-prod-migrations:latest
         container_name: blokmap-prod-migrations
         <<: *common-config
         restart: "no"
