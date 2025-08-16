@@ -1,0 +1,37 @@
+permissions:
+    packages: read
+
+on:
+    workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+    deploy:
+        runs-on: self-hosted
+        steps:
+          - name: Run migrations
+            uses: appleboy/ssh-action@v1.2.1
+            with:
+                host: ${{ secrets.PRODUCTION_HOST }}
+                username: ${{ secrets.PRODUCTION_USERNAME }}
+                key: ${{ secrets.PRODUCTION_SSH_KEY }}
+                debug: true
+                script: |
+                    cd /home/blokmap/deploy && git pull
+                    docker compose -f /home/blokmap/deploy/production/compose.prod.yaml pull
+                    docker compose -f /home/blokmap/deploy/production/compose.prod.yaml up blokmap-prod-migrations
+
+          - name: Deploy front and backend
+            uses: appleboy/ssh-action@v1.2.1
+            with:
+                host: ${{ secrets.PRODUCTION_HOST }}
+                username: ${{ secrets.PRODUCTION_USERNAME }}
+                key: ${{ secrets.PRODUCTION_SSH_KEY }}
+                debug: true
+                script: |
+                    cd /home/blokmap/deploy && git pull
+                    docker compose -f /home/blokmap/deploy/production/compose.prod.yaml pull
+                    docker compose -f /home/blokmap/deploy/production/compose.prod.yaml up blokmap-prod-frontend blokmap-prod-backend -d
