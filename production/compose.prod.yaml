@@ -6,7 +6,7 @@ x-common-config: &common-config
 
 services:
     blokmap-prod-frontend:
-        image: ghcr.io/blokmap/blokmap-frontend:latest
+        image: ghcr.io/blokmap/blokmap-prod-frontend:latest
         container_name: blokmap-prod-frontend
         <<: *common-config
         restart: "no"
