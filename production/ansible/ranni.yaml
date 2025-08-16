@@ -34,3 +34,8 @@
         - blokmap
         - production
         - nginx
+
+    - role: nginx_vhost
+      nginx_vhost__file: gsr_redirect.conf
+      tags:
+        - gsr
