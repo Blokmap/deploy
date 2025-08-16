@@ -1,3 +1,5 @@
+name: Deploy to Staging
+
 permissions:
     packages: read
 
