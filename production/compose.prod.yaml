@@ -35,7 +35,7 @@ services:
           - STATIC_URL=https://blokmap.ugent.be/static/
         volumes:
           - type: bind
-            source: ~/blokmap-files
+            source: /srv/static
             target: /mnt/files
         ports:
           - "3000:80"

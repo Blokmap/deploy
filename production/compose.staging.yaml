@@ -25,7 +25,7 @@ services:
           - STATIC_URL=https://staging.blokmap.ugent.be/static/
         volumes:
           - type: bind
-            source: ~/blokmap-staging-files
+            source: /srv/static
             target: /mnt/files
         ports:
           - "3001:80"
