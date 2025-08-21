@@ -62,8 +62,8 @@ docker compose up --build
 
 The project will be available at [https://dev.blokmap.io](https://dev.blokmap.io):
 
-- Frontend build files are served on [https://dev.blokmap.io](https://dev.blokmap.io) with HMR enabled.
-- Backend API is available on [https://dev.blokmap.io/api](https://dev.blokmap.io/api) with automatic reloading enabled.
+- Frontend build files are served on [https://dev.blokmap.io](https://dev.blokmap.io) with hot reloading enabled.
+- Backend API is available on [https://dev.blokmap.io/api](https://dev.blokmap.io/api) with hot reloading enabled.
 
 ## Production
 
