@@ -38,6 +38,20 @@ services:
       - blokmap-dev-database
       - blokmap-dev-redis
 
+  blokmap-dev-authentication:
+    <<: *common-config
+    container_name: blokmap-dev-authentication
+    build:
+      context: ${AUTHENTICATION_DIR}
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ${AUTHENTICATION_DIR}:/auth-server
+    ports:
+      - "4000:80"
+    secrets:
+      - cookie-jar-key
+      - google-oidc-credentials
+
   blokmap-dev-database:
     <<: *common-config
     image: postgres:17.0-alpine
@@ -70,6 +84,7 @@ services:
     depends_on:
       - blokmap-dev-frontend
       - blokmap-dev-backend
+      - blokmap-dev-authentication
     networks:
       - blokmap-dev-network
 
