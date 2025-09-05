@@ -50,6 +50,19 @@ services:
         depends_on:
           - blokmap-staging-database
 
+    blokmap-staging-authentication:
+        image: ghcr.io/blokmap/blokmap-staging-authentication:latest
+        container_name: blokmap-staging-authentication
+        <<: *common-config
+        environment:
+          - FRONTEND_URL=https://staging.blokmap.ugent.be/
+          - AUTHENTICATION_URL=https://staging.blokmap.ugent.be/api/auth/
+        ports:
+          - "3002:80"
+        secrets:
+          - cookie-jar-key
+          - google-oidc-credentials
+
     blokmap-staging-database:
         image: postgres:17.0-alpine
         container_name: blokmap-staging-database
