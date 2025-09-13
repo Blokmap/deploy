@@ -12,6 +12,8 @@ services:
     build:
       context: ${FRONTEND_DIR}
       dockerfile: Dockerfile.dev
+    environment:
+      - VITE_MAPBOX_API_KEY=${MAPBOX_API_KEY}
     volumes:
       - ${FRONTEND_DIR}:/blokmap-frontend
       - /blokmap-frontend/node_modules
