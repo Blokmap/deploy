@@ -43,6 +43,7 @@ services:
           - "3000:80"
         secrets:
           - cookie-jar-key
+          - claims-cookie-key
           - google-oidc-credentials
         depends_on:
           - blokmap-prod-database
@@ -94,6 +95,8 @@ services:
 secrets:
     cookie-jar-key:
         file: ./secrets/cookie-jar-key
+    claims-cookie-key:
+        file: ./secrets/claims-cookie-key
     google-oidc-credentials:
         file: ./secrets/google-oidc-credentials
 
