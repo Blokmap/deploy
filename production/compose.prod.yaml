@@ -10,6 +10,8 @@ services:
         container_name: blokmap-prod-frontend
         <<: *common-config
         restart: "no"
+        environment:
+          - VITE_MAPBOX_API_KEY=${MAPBOX_API_KEY}
         volumes:
           - ${FRONTEND_PROD_DIR}:/blokmap-frontend/public
 
