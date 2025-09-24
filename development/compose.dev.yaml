@@ -30,6 +30,7 @@ services:
         - DATABASE_URL=postgresql://${BACKEND_DATABASE_USER}:${BACKEND_DATABASE_PASSWORD}@blokmap-dev-backend-database:5432/${BACKEND_DATABASE_NAME}
     volumes:
       - ${BACKEND_DIR}:/blokmap-backend
+      - backend-target:/blokmap-backend/target
       - ${FILES_DIR}:/mnt/files
     ports:
       - "8000:80"
@@ -120,3 +121,6 @@ networks:
   blokmap-dev-network:
     name: blokmap-dev-network
     driver: bridge
+
+volumes:
+  backend-target:
