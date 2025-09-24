@@ -102,7 +102,7 @@ services:
           - POSTGRES_PASSWORD=appel
           - POSTGRES_DB=blokmap_authentication
         ports:
-          - "6543:5432"
+          - "7654:5432"
         volumes:
           - type: bind
             source: ~/blokmap-staging-authdata
