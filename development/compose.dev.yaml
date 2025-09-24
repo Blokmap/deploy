@@ -38,7 +38,7 @@ services:
       - claims-cookie-key
       - google-oidc-credentials
     depends_on:
-      - blokmap-dev-database
+      - blokmap-dev-backend-database
       - blokmap-dev-redis
 
   blokmap-dev-authentication:
@@ -57,6 +57,8 @@ services:
       - cookie-jar-key
       - claims-cookie-key
       - google-oidc-credentials
+    depends_on:
+      - blokmap-dev-authentication-database
 
   blokmap-dev-backend-database:
     <<: *common-config
