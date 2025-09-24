@@ -48,7 +48,7 @@ services:
       context: ${AUTHENTICATION_DIR}
       dockerfile: Dockerfile.dev
     environment:
-      - DATABASE_URL=posgresql://${AUTHENTICATION_DATABASE_USER}:${AUTHENTICATION_DATABASE_PASSWORD}@blokmap-dev-authentication-database:5432/${AUTHENTICATION_DATABASE_NAME}
+      - DATABASE_URL=postgresql://${AUTHENTICATION_DATABASE_USER}:${AUTHENTICATION_DATABASE_PASSWORD}@blokmap-dev-authentication-database:5432/${AUTHENTICATION_DATABASE_NAME}
     volumes:
       - ${AUTHENTICATION_DIR}:/auth-server
     ports:
