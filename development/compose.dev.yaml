@@ -27,7 +27,7 @@ services:
       context: ${BACKEND_DIR}
       dockerfile: Dockerfile.dev
     environment:
-        - DATABASE_URL=postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@blokmap-dev-database:5432/${DATABASE_NAME}
+        - DATABASE_URL=postgresql://${BACKEND_DATABASE_USER}:${BACKEND_DATABASE_PASSWORD}@blokmap-dev-backend-database:5432/${BACKEND_DATABASE_NAME}
     volumes:
       - ${BACKEND_DIR}:/blokmap-backend
       - ${FILES_DIR}:/mnt/files
@@ -47,6 +47,8 @@ services:
     build:
       context: ${AUTHENTICATION_DIR}
       dockerfile: Dockerfile.dev
+    environment:
+      - DATABASE_URL=posgresql://${AUTHENTICATION_DATABASE_USER}:${AUTHENTICATION_DATABASE_PASSWORD}@blokmap-dev-authentication-database:5432/${AUTHENTICATION_DATABASE_NAME}
     volumes:
       - ${AUTHENTICATION_DIR}:/auth-server
     ports:
@@ -56,17 +58,29 @@ services:
       - claims-cookie-key
       - google-oidc-credentials
 
-  blokmap-dev-database:
+  blokmap-dev-backend-database:
     <<: *common-config
     image: postgres:17.0-alpine
-    container_name: blokmap-dev-database
+    container_name: blokmap-dev-backend-database
     environment:
-      - PGUSER=${DATABASE_USER}
-      - POSTGRES_DB=${DATABASE_NAME}
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - PGUSER=${BACKEND_DATABASE_USER}
+      - POSTGRES_DB=${BACKEND_DATABASE_NAME}
+      - POSTGRES_USER=${BACKEND_DATABASE_USER}
+      - POSTGRES_PASSWORD=${BACKEND_DATABASE_PASSWORD}
     ports:
       - "6543:5432"
+
+  blokmap-dev-authentication-database:
+    <<: *common-config
+    image: postgres:17.0-alpine
+    container_name: blokmap-dev-authentication-database
+    environment:
+      - PGUSER=${AUTHENTICATION_DATABASE_USER}
+      - POSTGRES_DB=${AUTHENTICATION_DATABASE_NAME}
+      - POSTGRES_USER=${AUTHENTICATION_DATABASE_USER}
+      - POSTGRES_PASSWORD=${AUTHENTICATION_DATABASE_PASSWORD}
+    ports:
+      - "7654:5432"
 
   blokmap-dev-redis:
     <<: *common-config
