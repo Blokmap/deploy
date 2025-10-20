@@ -20,7 +20,7 @@ services:
         container_name: blokmap-staging-backend
         <<: *common-config
         environment:
-          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-backend-database:5432/blokmap
           - REDIS_URL=redis://blokmap-staging-redis/
           - BACKEND_URL=https://staging.blokmap.ugent.be/api/
           - FRONTEND_URL=https://staging.blokmap.ugent.be/
@@ -36,7 +36,7 @@ services:
           - claims-cookie-key
           - google-oidc-credentials
         depends_on:
-          - blokmap-staging-database
+          - blokmap-staging-backend-database
           - blokmap-staging-redis
 
     blokmap-staging-migrations:
@@ -45,13 +45,13 @@ services:
         <<: *common-config
         restart: "no"
         environment:
-          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-database:5432/blokmap
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-backend-database:5432/blokmap
         volumes:
           - type: bind
             source: ~/blokmap-staging-files
             target: /mnt/files
         depends_on:
-          - blokmap-staging-database
+          - blokmap-staging-backend-database
 
     blokmap-staging-authentication:
         image: ghcr.io/blokmap/blokmap-staging-authentication:latest
@@ -60,16 +60,19 @@ services:
         environment:
           - FRONTEND_URL=https://staging.blokmap.ugent.be/
           - AUTHENTICATION_URL=https://staging.blokmap.ugent.be/api/auth/
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-authentication-database:5432/blokmap_authentication
         ports:
           - "3002:80"
         secrets:
           - cookie-jar-key
           - claims-cookie-key
           - google-oidc-credentials
+        depends_on:
+          - blokmap-staging-authentication-database
 
-    blokmap-staging-database:
+    blokmap-staging-backend-database:
         image: postgres:17.0-alpine
-        container_name: blokmap-staging-database
+        container_name: blokmap-staging-backend-database
         <<: *common-config
         environment:
           - PGUSER=blokmap
@@ -81,6 +84,28 @@ services:
         volumes:
           - type: bind
             source: ~/blokmap-staging-data
+            target: /var/lib/postgresql/data
+        healthcheck:
+            test: [ "CMD", "pg_isready" ]
+            interval: 30s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+
+    blokmap-staging-authentication-database:
+        image: postgres:17.0-alpine
+        container_name: blokmap-staging-authentication-database
+        <<: *common-config
+        environment:
+          - PGUSER=blokmap
+          - POSTGRES_USER=blokmap
+          - POSTGRES_PASSWORD=appel
+          - POSTGRES_DB=blokmap_authentication
+        ports:
+          - "7654:5432"
+        volumes:
+          - type: bind
+            source: ~/blokmap-staging-authdata
             target: /var/lib/postgresql/data
         healthcheck:
             test: [ "CMD", "pg_isready" ]
