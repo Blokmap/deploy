@@ -71,7 +71,7 @@ services:
           - blokmap-staging-authentication-database
 
     blokmap-staging-backend-database:
-        image: postgres:17.0-alpine
+        image: postgres:18.0-alpine
         container_name: blokmap-staging-backend-database
         <<: *common-config
         environment:
@@ -93,7 +93,7 @@ services:
             start_period: 30s
 
     blokmap-staging-authentication-database:
-        image: postgres:17.0-alpine
+        image: postgres:18.0-alpine
         container_name: blokmap-staging-authentication-database
         <<: *common-config
         environment:
