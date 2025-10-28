@@ -64,7 +64,7 @@ services:
 
   blokmap-dev-backend-database:
     <<: *common-config
-    image: postgres:17.0-alpine
+    image: postgres:18.0-alpine
     container_name: blokmap-dev-backend-database
     environment:
       - PGUSER=${BACKEND_DATABASE_USER}
@@ -76,7 +76,7 @@ services:
 
   blokmap-dev-authentication-database:
     <<: *common-config
-    image: postgres:17.0-alpine
+    image: postgres:18.0-alpine
     container_name: blokmap-dev-authentication-database
     environment:
       - PGUSER=${AUTHENTICATION_DATABASE_USER}
