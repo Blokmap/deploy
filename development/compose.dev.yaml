@@ -16,7 +16,7 @@ services:
       - VITE_MAPBOX_API_KEY=${MAPBOX_API_KEY}
     volumes:
       - ${FRONTEND_DIR}:/blokmap-frontend
-      - frontend-node-modules:/blokmap-frontend/node_modules
+      - /blokmap-frontend/node_modules
     ports:
       - "3000:3000"
 
@@ -52,7 +52,7 @@ services:
       - DATABASE_URL=postgresql://${AUTHENTICATION_DATABASE_USER}:${AUTHENTICATION_DATABASE_PASSWORD}@blokmap-dev-authentication-database:5432/${AUTHENTICATION_DATABASE_NAME}
     volumes:
       - ${AUTHENTICATION_DIR}:/auth-server
-      - auth-node-modules:/auth-server/node_modules
+      - /auth-server/node_modules
     ports:
       - "4000:80"
     secrets:
@@ -125,5 +125,3 @@ networks:
 
 volumes:
   backend-target:
-  frontend-node-modules:
-  auth-node-modules:
