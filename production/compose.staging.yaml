@@ -76,7 +76,7 @@ services:
         <<: *common-config
         restart: "no"
         environment:
-          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-authentication-database:5432/blokmap_authentication
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-authentication-database:5432/blokmap_authentication?sslmode=disable
         ports:
           - "3003:80"
         volumes:
