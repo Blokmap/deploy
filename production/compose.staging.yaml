@@ -70,6 +70,22 @@ services:
         depends_on:
           - blokmap-staging-authentication-database
 
+    blokmap-staging-authentication-migrations:
+        image: ghcr.io/blokmap/blokmap-staging-authentication-migrations:latest
+        container_name: blokmap-staging-authentication-migrations
+        <<: *common-config
+        restart: "no"
+        environment:
+          - DATABASE_URL=postgresql://blokmap:appel@blokmap-staging-authentication-database:5432/blokmap_authentication
+        ports:
+          - "3003:80"
+        volumes:
+          - type: bind
+            source: ~/blokmap-staging-files
+            target: /mnt/files
+        depends_on:
+          - blokmap-staging-authentication-database
+
     blokmap-staging-backend-database:
         image: postgres:18.0-alpine
         container_name: blokmap-staging-backend-database
