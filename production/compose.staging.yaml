@@ -124,7 +124,7 @@ services:
             source: ~/blokmap-staging-authdata
             target: /var/lib/postgresql/18/docker
         healthcheck:
-            test: [ "CMD", "pg_isready" ]
+            test: [ "CMD", "pg_isready", "-d", "blokmap_authentication" ]
             interval: 30s
             timeout: 5s
             retries: 5
