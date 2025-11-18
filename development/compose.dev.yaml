@@ -66,6 +66,8 @@ services:
     <<: *common-config
     image: postgres:18.0-alpine
     container_name: blokmap-dev-backend-database
+    volumes:
+      - backend-database:/var/lib/postgresql/18/docker
     environment:
       - PGUSER=${BACKEND_DATABASE_USER}
       - POSTGRES_DB=${BACKEND_DATABASE_NAME}
@@ -78,6 +80,8 @@ services:
     <<: *common-config
     image: postgres:18.0-alpine
     container_name: blokmap-dev-authentication-database
+    volumes:
+      - auth-database:/var/lib/postgresql/18/docker
     environment:
       - PGUSER=${AUTHENTICATION_DATABASE_USER}
       - POSTGRES_DB=${AUTHENTICATION_DATABASE_NAME}
@@ -125,3 +129,5 @@ networks:
 
 volumes:
   backend-target:
+  backend-database:
+  auth-database:
