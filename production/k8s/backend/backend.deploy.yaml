@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: backend
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: backend
+            component: application
+    template:
+        metadata:
+            name: backend
+            labels:
+                app: blokmap
+                environment: staging
+                tier: backend
+                component: application
+        spec:
+            containers:
+              - name: backend
+                image: ghcr.io/blokmap/blokmap-staging-backend:latest
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                envFrom:
+                  - configMapRef:
+                        name: backend
+                volumeMounts:
+                  - name: backend-files-volume
+                    mountPath: /mnt/files
+                    readOnly: false
+                  - name: backend-secret-cookie-jar-key
+                    mountPath: /run/secrets/cookie-jar-key
+                    readOnly: true
+                    subPath: cookie-jar-key
+                  - name: backend-secret-claims-cookie-key
+                    mountPath: /run/secrets/claims-cookie-key
+                    readOnly: true
+                    subPath: claims-cookie-key
+                  - name: backend-secret-google-oidc-credentials
+                    mountPath: /run/secrets/google-oidc-credentials
+                    readOnly: true
+                    subPath: google-oidc-credentials
+            volumes:
+              - name: backend-files-volume
+                persistentVolumeClaim:
+                    claimName: static-files
+              - name: backend-secret-cookie-jar-key
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: cookie-jar-key
+                        path: cookie-jar-key
+              - name: backend-secret-claims-cookie-key
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: claims-cookie-key
+                        path: claims-cookie-key
+              - name: backend-secret-google-oidc-credentials
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: google-oidc-credentials
+                        path: google-oidc-credentials

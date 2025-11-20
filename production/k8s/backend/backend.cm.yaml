@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: backend
+immutable: true
+data:
+    DATABASE_URL: postgresql://blokmap:appel@backend-db:5432/blokmap
+    REDIS_URL: redis://backend-cache/
+    BACKEND_URL: https://dev.blokmap.io/api/
+    FRONTEND_URL: https://dev.blokmap.io/
+    STATIC_URL: https://dev.blokmap.io/static/

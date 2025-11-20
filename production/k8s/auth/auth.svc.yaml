@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: auth
+spec:
+    type: ClusterIP
+    selector:
+        app: blokmap
+        environment: staging
+        tier: auth
+        component: application
+    ports:
+      - port: 80
+        targetPort: 80

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: auth
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: auth
+            component: application
+    template:
+        metadata:
+            name: auth
+            labels:
+                app: blokmap
+                environment: staging
+                tier: auth
+                component: application
+        spec:
+            containers:
+              - name: auth
+                image: ghcr.io/blokmap/blokmap-staging-authentication:latest
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                envFrom:
+                  - configMapRef:
+                        name: auth
+                volumeMounts:
+                  - name: auth-secret-cookie-jar-key
+                    mountPath: /run/secrets/cookie-jar-key
+                    readOnly: true
+                    subPath: cookie-jar-key
+                  - name: auth-secret-claims-cookie-key
+                    mountPath: /run/secrets/claims-cookie-key
+                    readOnly: true
+                    subPath: claims-cookie-key
+                  - name: auth-secret-google-oidc-credentials
+                    mountPath: /run/secrets/google-oidc-credentials
+                    readOnly: true
+                    subPath: google-oidc-credentials
+            volumes:
+              - name: auth-secret-cookie-jar-key
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: cookie-jar-key
+                        path: cookie-jar-key
+              - name: auth-secret-claims-cookie-key
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: claims-cookie-key
+                        path: claims-cookie-key
+              - name: auth-secret-google-oidc-credentials
+                secret:
+                    secretName: blokmap-secrets
+                    items:
+                      - key: google-oidc-credentials
+                        path: google-oidc-credentials

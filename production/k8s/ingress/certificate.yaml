@@ -1,0 +1,10 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+    name: ingress-certificate
+spec:
+    secretName: blokmap-certs
+    issuerRef:
+        name: letsencrypt-staging
+        kind: ClusterIssuer
+    commonName: dev.blokmap.io

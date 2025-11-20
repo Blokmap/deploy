@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: static
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: static
+            component: application
+    template:
+        metadata:
+            name: static
+            labels:
+                app: blokmap
+                environment: staging
+                tier: static
+                component: application
+        spec:
+            containers:
+              - name: static
+                image: nginx:stable-alpine
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                volumeMounts:
+                  - name: static-files-volume
+                    mountPath: /usr/share/nginx/html
+                    readOnly: true
+            volumes:
+              - name: static-files-volume
+                persistentVolumeClaim:
+                    claimName: static-files

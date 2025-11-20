@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: frontend
+            component: application
+    template:
+        metadata:
+            name: frontend
+            labels:
+                app: blokmap
+                environment: staging
+                tier: frontend
+                component: application
+        spec:
+            containers:
+              - name: frontend
+                image: blokmap-test-frontend:latest
+                imagePullPolicy: Never
+                ports:
+                  - containerPort: 80

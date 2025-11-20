@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: backend-db
+spec:
+    replicas: 1
+    serviceName: backend-db
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: backend
+            component: database
+    template:
+        metadata:
+            labels:
+                app: blokmap
+                environment: staging
+                tier: backend
+                component: database
+        spec:
+            containers:
+              - name: backend-db
+                image: postgres:18.0-alpine
+                ports:
+                  - containerPort: 5432
+                envFrom:
+                  - configMapRef:
+                        name: backend-db
+                volumeMounts:
+                  - name: backend-db
+                    mountPath: /var/lib/postgresql/18/docker
+                    readOnly: false
+                livenessProbe:
+                    exec:
+                        command: ["pg_isready"]
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                    timeoutSeconds: 5
+                    failureThreshold: 3
+    volumeClaimTemplates:
+      - metadata:
+            name: backend-db
+        spec:
+            storageClassName: manual
+            accessModes:
+                - ReadWriteOncePod
+            selector:
+                matchLabels:
+                    app: blokmap
+                    environment: staging
+                    tier: backend
+                    component: volume
+                    related-to: database
+            resources:
+                requests:
+                    storage: 50Gi

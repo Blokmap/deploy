@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: backend-cache
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: backend
+            component: cache
+    template:
+        metadata:
+            name: backend-cache
+            labels:
+                app: blokmap
+                environment: staging
+                tier: backend
+                component: cache
+        spec:
+            containers:
+              - name: backend-cache
+                image: redis:7-alpine
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 6379

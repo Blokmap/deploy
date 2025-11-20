@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: auth-db
+spec:
+    replicas: 1
+    serviceName: auth-db
+    selector:
+        matchLabels:
+            app: blokmap
+            environment: staging
+            tier: auth
+            component: database
+    template:
+        metadata:
+            labels:
+                app: blokmap
+                environment: staging
+                tier: auth
+                component: database
+        spec:
+            containers:
+              - name: auth-db
+                image: postgres:18.0-alpine
+                ports:
+                  - containerPort: 5432
+                envFrom:
+                  - configMapRef:
+                        name: auth-db
+                volumeMounts:
+                  - name: auth-db
+                    mountPath: /var/lib/postgresql/18/docker
+                    readOnly: false
+                livenessProbe:
+                    exec:
+                        command: ["pg_isready", "-d", "blokmap_authentication"]
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                    timeoutSeconds: 5
+                    failureThreshold: 3
+    volumeClaimTemplates:
+      - metadata:
+            name: auth-db
+        spec:
+            storageClassName: manual
+            accessModes:
+                - ReadWriteOncePod
+            selector:
+                matchLabels:
+                    app: blokmap
+                    environment: staging
+                    tier: auth
+                    component: volume
+                    related-to: database
+            resources:
+                requests:
+                    storage: 50Gi

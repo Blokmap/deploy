@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: auth
+immutable: true
+data:
+    FRONTEND_URL: https://dev.blokmap.io/
+    AUTHENTICATION_URL: https://dev.blokmap.io/api/auth/
+    DATABASE_URL: postgresql://blokmap:appel@auth-db:5432/blokmap_authentication

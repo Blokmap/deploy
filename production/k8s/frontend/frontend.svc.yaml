@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: frontend
+spec:
+    type: ClusterIP
+    selector:
+        app: blokmap
+        environment: staging
+        tier: static
+        component: application
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80

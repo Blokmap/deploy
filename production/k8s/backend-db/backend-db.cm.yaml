@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: backend-db
+immutable: true
+data:
+    PGUSER: blokmap
+    POSTGRES_USER: blokmap
+    POSTGRES_PASSWORD: appel
+    POSTGRES_DB: blokmap
